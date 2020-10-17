@@ -3,6 +3,10 @@
  */
 public class LeapYear {
 
+    private static boolean isLeapYear(int year) {
+        return true;
+    }
+
     /** Calls isLeapYear to print correct statement.
      *  @param  year to be analyzed
      */
@@ -13,6 +17,7 @@ public class LeapYear {
             System.out.printf("%d is not a leap year.\n", year);
         }
     }
+
 
     /** Must be provided an integer as a command line argument ARGS. */
     public static void main(String[] args) {
