@@ -1,21 +1,28 @@
-public class LinkedListDeque<T>{// T generic
-    //declare new class Tnode
-    private class TNode{
-        private TNode prev;//attributes
+public class LinkedListDeque<T> implements Deque<T> {
+
+    private class TNode {
+        private T item;
+        private TNode prev;
         private TNode next;
 
-        private TNode(T x,TNode p, TNode n) {//T node constructor
+        private TNode(T x, TNode p, TNode n) {
             item = x;
             prev = p;
             next = n;
         }
     }
-    //attributes in LinkedListDeque
-    private TNode sentinel;// The first item in the deque is the sentinel.next
+
+    /**
+     *  The first item (if it exists) in the deque is the sentinel.next
+     */
+    private TNode sentinel;
     private int size;
 
-    public LinkedListDeque() {//Create empty deque
-        sentinel = new TNode(null,null,null);
+    /**
+     * Create an empty deque
+     */
+    public LinkedListDeque() {
+        sentinel = new TNode(null, null, null);
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
         size = 0;
@@ -24,6 +31,7 @@ public class LinkedListDeque<T>{// T generic
     /**
      * Return the number of items in the deque
      */
+    @Override
     public int size() {
         return size;
     }
@@ -31,6 +39,7 @@ public class LinkedListDeque<T>{// T generic
     /**
      * Return true if deque is empty, false otherwise
      */
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
@@ -38,6 +47,7 @@ public class LinkedListDeque<T>{// T generic
     /**
      * Add an item of type T to the front of the deque
      */
+    @Override
     public void addFirst(T item) {
         sentinel.next = new TNode(item, sentinel, sentinel.next);
         sentinel.next.next.prev = sentinel.next;
@@ -47,6 +57,7 @@ public class LinkedListDeque<T>{// T generic
     /**
      * Add an item of type T to the back of the deque
      */
+    @Override
     public void addLast(T item) {
         sentinel.prev = new TNode(item, sentinel.prev, sentinel);
         sentinel.prev.prev.next = sentinel.prev;
@@ -57,6 +68,7 @@ public class LinkedListDeque<T>{// T generic
      * Remove and return the item at the front of the deque
      * If no such item exists, return null
      */
+    @Override
     public T removeFirst() {
         T toRemove = sentinel.next.item;
         sentinel.next.next.prev = sentinel;
@@ -72,6 +84,7 @@ public class LinkedListDeque<T>{// T generic
      * Remove and return the item at the back of the deque
      * If no such item exists, return null
      */
+    @Override
     public T removeLast() {
         T toRemove = sentinel.prev.item;
         sentinel.prev.prev.next = sentinel;
@@ -86,6 +99,7 @@ public class LinkedListDeque<T>{// T generic
      * Print the items in the deque from first to last, separated by a space
      * Once all the items have been printed, print out a new line
      */
+    @Override
     public void printDeque() {
         TNode toPrint = sentinel.next;
         for (int i = 0; i < size; i++) {
@@ -100,6 +114,7 @@ public class LinkedListDeque<T>{// T generic
      * 1 is the next item, and so forth. I fno such item exists,
      * return null. Must not alter the deque
      */
+    @Override
     public T get(int index) {
         TNode toGet = sentinel.next;
         for (int i = 0; i < index; i++) {
@@ -139,3 +154,34 @@ public class LinkedListDeque<T>{// T generic
     }
 
 }
+/*
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
+
+use extends LinkedList
+public class LinkedListDeque<Item> extends LinkedList<Item> {
+    public void printDeque() {
+        System.out.println("dummy");
+    }
+
+    public Item getRecursive(int i) {
+        return get(i);
+    }
+
+    public Item removeFirst() {
+        try {
+            return super.removeFirst();
+        } catch (NoSuchElementException e) {
+            return null;
+        }
+    }
+
+    public Item removeLast() {
+        try {
+            return super.removeLast();
+        } catch (NoSuchElementException e) {
+            return null;
+        }
+    }
+}
+ */
