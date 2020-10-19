@@ -3,6 +3,7 @@ public class LinkedListDeque<T>{// T generic
     private class TNode{
         private TNode prev;//attributes
         private TNode next;
+        private T item;
 
         private TNode(T x,TNode p, TNode n) {//T node constructor
             item = x;

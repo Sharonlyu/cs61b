@@ -25,7 +25,7 @@ public class Palindrome {
     private boolean isPalindromeHelper(Deque<Character>deque, CharacterComparator cc) {
         if (deque.size() <= 1) {
             return true;
-        } else if (cc.equalChars(deque.removeFirst(),deque.removeLast()){
+        } else if (cc.equalChars(deque.removeFirst(),deque.removeLast())){
             return false;
         } else {
             return isPalindromeHelper(deque, cc);
