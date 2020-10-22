@@ -2,6 +2,8 @@ package synthesizer;
 import java.util.Iterator;
 
 public interface BoundedQueue<T> {
+    @Override
+    public abstract Iterator<T> iterator();
     int capacity();
     int fillCount();
     void enqueue(T x);
@@ -16,6 +18,6 @@ public interface BoundedQueue<T> {
         return fillCount() == capacity();
     }
 
-    Iterator<T> iterator();
+
 
 }

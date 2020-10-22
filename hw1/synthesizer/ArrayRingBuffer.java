@@ -2,7 +2,7 @@ package synthesizer;
 
 //TODO: Make sure to make this class and all of its methods public
 //TODO: Make sure to make this class extend AbstractBoundedQueue<t>
-public abstract class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
+public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     /* Index for the next dequeue or peek. */
     private int first;            // index for the next dequeue or peek
     /* Index for the next enqueue. */
@@ -19,7 +19,7 @@ public abstract class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         //       this.capacity should be set appropriately. Note that the local variable
         //       here shadows the field we inherit from AbstractBoundedQueue, so
         //       you'll need to use this.capacity to set the capacity.
-        rb = (T[]) new Object [capacity];
+        rb = (T[]) new Object [capacity];//need to cast
         this.capacity = capacity;
         fillCount = 0;
         first = 0;
@@ -29,12 +29,7 @@ public abstract class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
 
 
 
-    private int addOne(int x) {
-        if (x + 1 == this.capacity) {
-            return 0;
-        }
-        return x + 1;
-    }
+
 
     /**
      * Adds x to the end of the ring buffer. If there is no room, then
@@ -43,12 +38,12 @@ public abstract class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      * @param x
      */
     @Override
-    public void enqueue(T x) {
+    public void enqueue(T x) {//enqueue the last
         if (isFull()) {
             throw new RuntimeException("Ring buffer overflow");
         }
         rb[last] = x;
-        last = addOne(last);
+        last = (last+1)%capacity;
         fillCount += 1;
     }
 
@@ -57,20 +52,20 @@ public abstract class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      * throw new RuntimeException("Ring buffer underflow"). Exceptions
      * covered Monday.
      */
-    public T dequeue() {
+    public T dequeue() {//dequeue the first
         // TODO: Dequeue the first item. Don't forget to decrease fillCount and update
 
             if (isEmpty()) {
                 throw new RuntimeException("Ring buffer overflow");
             }
-            T placeholder = rb[first];
+            T item = rb[first];
             rb[first] = null;
-            first = addOne(first);
+            first = (first+1)%capacity;
             fillCount -= 1;
-            return placeholder;
+            return item;
         }
 
-    }
+
 
     /**
      * Return oldest item, but don't remove it.
